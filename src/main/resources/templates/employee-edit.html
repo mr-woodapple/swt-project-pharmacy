@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html(title=#{register.title})}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Edit Employee</h2>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <h5>Please change personal information:</h5>
+                <br>
+
+                <form method="post" role="form" class="ui form" id="form">
+
+                    <div class="form mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <p>
+                            <i class="fas fa-info-circle"></i>
+                            <i>Usernames can't be changed.</i>
+                        </p>
+                        <input class="form-control" id="username" name="username" type="text" th:value="${employee.username}" readonly>
+                    </div>
+
+                    <div class="form mb-3">
+                        <label for="firstname" class="form-label">First Name</label>
+                        <input class="form-control" id="firstname" name="firstname" type="text" th:value="${employee.firstname}" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid first name.
+                        </div>
+                    </div>
+
+                    <div class="form mb-3">
+                        <label for="lastname" class="form-label">Last Name</label>
+                        <input class="form-control" id="lastname" name="lastname" type="text" th:value="${employee.lastname}" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid last name.
+                        </div>
+                    </div>
+
+                    <div class="form mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input class="form-control" id="address" name="address" type="text" th:value="${employee.address}" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid address.
+                        </div>
+                    </div>
+
+                    <div class="form mb-3">
+                        <label for="bankinfo" class="form-label">Bank Information</label>
+                        <input class="form-control" id="bankinfo" name="bankinfo" type="text" th:value="${employee.bankinfo}" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid bankinfo.
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>

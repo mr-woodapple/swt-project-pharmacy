@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html(title=#{register.title})}">
+    <head>
+    </head>
+    <body>
+        <section layout:fragment="content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col sub-wrapper">
+                        <h2>Add new Employee</h2>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col sub-wrapper">
+
+                        <h5>Please enter personal information:</h5>
+                        <p>
+                            <i class="fas fa-info-circle"></i>
+                            <i>Note that username and role can't be changed once created.</i>
+                        </p>
+                        <br>
+
+                        <form method="post" role="form" class="ui form" id="form" th:action="@{/register}" th:object="${registrationForm}">
+
+                            <div class="form mb-3">
+                                <label for="firstname" class="form-label">First Name</label>
+                                <input class="form-control" id="firstname" name="firstname" field="*{firstname}"
+                                       errorclass="fieldError" type="text"  value="Katharina" required>
+                            </div>
+
+                            <div class="form mb-3">
+                                <label for="lastname" class="form-label">Last Name</label>
+                                <input class="form-control" id="lastname" name="lastname" field="*{lastname}"
+                                       errorclass="fieldError" type="text"  value="Lindner" required>
+                            </div>
+
+                            <div class="form mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input id="password" class="form-control" name="password" field="*{password}"
+                                       errorclass="fieldError" type="password" value="123" required >
+                            </div>
+
+                            <div class="form mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <input class="form-control" id="address" name="address" field="*{address}"
+                                       errorclass="fieldError" type="text" value="Pfotenhauerstraße 7" placeholder="Address" required>
+                            </div>
+
+                            <div class="form mb-3">
+                                <label for="bankinfo" class="form-label">Bank Information</label>
+                                <input class="form-control" id="bankinfo" name="bankinfo" field="*{bankinfo}"
+                                       errorclass="fieldError" type="text" value="DE72 1001 0010 0684 6738 39"  placeholder="Bank Info" required>
+                            </div>
+
+                            <br>
+
+                            <h5>Please select a role:</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" id="boss" value="Boss" >
+                                <label class="form-check-label" for="boss">
+                                    Boss
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" id="employee" value="Employee">
+                                <label class="form-check-label" for="employee">
+                                    Employee
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" id="laborant" value="Laborant">
+                                <label class="form-check-label" for="laborant">
+                                    Laboratory Technician
+                                </label>
+                            </div>
+
+                            <br>
+
+                            <div class="row">
+                                <div class="col d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Save Employee</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    </body>
+</html>

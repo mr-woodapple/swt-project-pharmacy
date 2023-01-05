@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+
+<body>
+<section layout:fragment="content">
+
+
+        <div class="col sub-wrapper">
+                <h3>Add new article</h3>
+        </div>
+		
+		<div class="col sub-wrapper">
+        <div class="ui items">
+    	<form class="ui form" method="post" th:action="@{/addStock}">
+
+                <div class="field">
+                    <label for="name" class="form-label">Product name </label>
+                    <input class="form-control " id="name" type="text" name="name" value="Pervitin" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Product name is empty!
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="id" class="form-label">Create ID</label>
+                    <input class="form-control " id="id" type="number" name="id" min="0" value="10202100" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Please provide the valid ID.
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label for="packSize" class="form-label">Pack size </label>
+                    <input class="form-control" id="packSize" type="text" name="packSize" value="200 x 10mg" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Package size is empty!
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="description" class="form-label">Description</label>
+                    <input class="form-control " id="description" type="text" name="description" value="Packungsbeilage" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Please provide a description.
+                    </div>
+                </div>
+                
+                <div class="form-check">
+            		<label for="prescription">Prescription</label>
+            		<input class="form-check-input" id="prescription" type="radio" name="prescription" value="true" checked/><br/>
+        		</div>
+
+        		<div class="form-check">
+            		<label for="prescription">No Prescription</label>
+            		<input class="form-check-input" id="prescriptionFalse" type="radio" name="prescription" value="false" required/><br/>
+        		</div>
+                
+                <div class="field">
+                    <label for="price" class="form-label">Retail price</label>
+                    <input class="form-control " id="price" type="number" name="price" value="20" step="0.01" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid price!
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label for="price" class="form-label">Purchase price</label>
+                    <input class="form-control " id="purchasePrice" type="number" value="5" name="purchasePrice" step="0.01" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid price!
+                    </div>
+                </div>                           
+                
+                <div class="field">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input class="form-control " id="quantity" type="number" name="quantity" value="50" min="1" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid Quantity!
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label for="expiryDate" class="form-label">Expiry Date</label>
+                    <input class="form-control " id="expiryDate" type="date" name="expiryDate" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid Date!
+                    </div>
+                </div>               
+
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 50px">Submit</button>
+
+            </form>
+        </div>
+        </div>
+
+</section>
+</body>
+</html>

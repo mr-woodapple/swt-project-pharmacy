@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="color-scheme" content="dark light">
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"
+            src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link th:ref="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
+    <script src="https://kit.fontawesome.com/72e5d29ba8.js" crossorigin="anonymous"></script>
+
+    <link th:href="@{/resources/css/light-theme.css}" rel="stylesheet"
+          href="../static/resources/css/light-theme.css" type="text/css" id="theme-link"/>
+    <link rel="shortcut icon" type="image/x-icon" href="resources/img/PharmacyLogo.svg">
+
+    <title>Apotheke</title>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- sidebar content -->
+    <div class="sidebar-wrapper">
+
+        <div class="sidebar-logo-area">
+            <a href="login.html" th:href="@{/}"><img class="d-inline" src="../resources/img/PharmacyLogo2.svg"></a>
+        </div>
+
+        <ul class="sidebar-nav">
+
+            <!-- Products -->
+            <li class="li-heading" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')">
+                <div class="col btn-group">
+                    <h5 class="sidebar-heading">
+                        <a href="product-overview.html" th:href="@{/product-overview}">
+                            <i class="fas fa-store" style="padding-right:10px"></i> Products</a>
+                    </h5>
+                    <h5 class="sidebar-heading">
+                        <a data-bs-toggle="collapse" href="#collapseProducts" role="button" aria-expanded="false" aria-controls="collapseProducts">
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </h5>
+                </div>
+            </li>
+            <li>
+                <div class="collapse" id="collapseProducts">
+                    <a href="product-overview.html" th:href="@{/product-overview}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')"><i class="fas fa-angle-right"></i> Overview</a>
+                    <br>
+                    <a href="inventory-overview.html" th:href="@{/inventory-overview}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')"><i class="fas fa-angle-right"></i> Inventory </a>
+
+                </div>
+            </li>
+
+
+            <!-- Finances -->
+            <li class="li-heading" sec:authorize="hasAnyRole('BOSS')">
+                <div class="col btn-group">
+                    <h5 class="sidebar-heading">
+                        <a href="accounting-overview.html" th:href="@{/accounting-overview}">
+                            <i class="fas fa-money-check-alt" style="padding-right:10px"></i> Finances</a>
+                    </h5>
+                    <h5 class="sidebar-heading">
+                        <a data-bs-toggle="collapse" href="#collapseFinances" role="button" aria-expanded="false" aria-controls="collapseFinances">
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </h5>
+                </div>
+            </li>
+            <li>
+                <div class="collapse" id="collapseFinances">
+                    <a href="accounting-overview.html" th:href="@{/accounting-overview}" sec:authorize="hasRole('BOSS')"><i class="fas fa-angle-right"></i>
+                        Overview</a>
+                </div>
+            </li>
+
+
+            <!-- Human Resources -->
+            <li class="li-heading" sec:authorize="hasAnyRole('BOSS')">
+                <div class="col btn-group">
+                    <h5 class="sidebar-heading">
+                        <a href="employee-overview.html" th:href="@{/employee-overview}">
+                            <i class="fas fa-user" style="padding-right: 10px"></i>Human Resources</a>
+                    </h5>
+                    <h5 class="sidebar-heading">
+                        <a data-bs-toggle="collapse" href="#collapseHR" role="button" aria-expanded="false" aria-controls="collapseHR">
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </h5>
+                </div>
+            </li>
+            <li>
+                <div class="collapse" id="collapseHR">
+                    <a href="register.html" th:href="@{/register}" sec:authorize="hasRole('BOSS')">
+                        <i class="fas fa-angle-right"></i> Add new Employee
+                    </a>
+                    <br>
+                    <a href="registerdoc.html" th:href="@{/registerdoc}" sec:authorize="hasRole('BOSS')">
+                        <i class="fas fa-angle-right"></i> Add new Doctor
+                    </a>
+                    <br>
+                    <a href="messages.html" th:href="@{/messages}" sec:authorize="hasRole('BOSS')">
+                        <i class="fas fa-angle-right"></i> Messages
+                    </a>
+                </div>
+            </li>
+
+
+            <!-- Laboratory -->
+            <li class="li-heading" sec:authorize="hasAnyRole('BOSS','EMPLOYEE', 'LABORANT')">
+                <div class="col btn-group">
+                    <h5 class="sidebar-heading">
+                        <a href="lab-orders.html" th:href="@{/lab-orders}">
+                            <i class="fas fa-flask" style="padding-right:10px"></i> Laboratory</a>
+                    </h5>
+                    <h5 class="sidebar-heading">
+                        <a data-bs-toggle="collapse" href="#collapseLaboratory" role="button" aria-expanded="false" aria-controls="collapseLaboratory">
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </h5>
+                </div>
+            </li>
+            <li>
+                <div class="collapse" id="collapseLaboratory">
+                    <a href="lab-new-order.html" th:href="@{/lab-new-order}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE','LABORANT')"><i class="fas fa-angle-right"></i> New Order in Lab</a>
+                    <br>
+                    <a href="lab-orders.html" th:href="@{/lab-orders}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE','LABORANT')"><i class="fas fa-angle-right"></i> Orders in Preparation</a>
+                    <br>
+                    <a href="lab-ready-orders.html" th:href="@{/lab-ready-orders}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE','LABORANT')"><i class="fas fa-angle-right"></i> Ready Lab Orders</a>
+                    <br>
+                    <a href="add-mixture-components.html" th:href="@{/add-mixture-components}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE','LABORANT')"><i class="fas fa-angle-right"></i> New Mixture Order</a>
+                </div>
+            </li>
+
+
+            <!-- Checkout -->
+            <li class="li-heading" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')">
+                <div class="col btn-group">
+                    <h5 class="sidebar-heading">
+                        <a href="catalog.html" th:href="@{/catalog}">
+                            <i class="fas fa-store" style="padding-right:10px"></i> Checkout</a>
+                    </h5>
+                    <h5 class="sidebar-heading">
+                        <a data-bs-toggle="collapse" href="#collapseCheckout" role="button" aria-expanded="false" aria-controls="collapseCheckout">
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </h5>
+                </div>
+            </li>
+            <li>
+                <div class="collapse" id="collapseCheckout">
+                    <a href="catalog.html" th:href="@{/catalog}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')"><i class="fas fa-angle-right"></i> Product List</a>
+                    <br>
+                    <a href="cart.html" th:href="@{/cart}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')"><i class="fas fa-angle-right"></i> Cart</a>
+                </div>
+            </li>
+
+
+            <!-- Self-Checkout -->
+            <li class="li-heading" sec:authorize="hasAnyRole('CUSTOMER')">
+                <div class="col btn-group">
+                    <h5 class="sidebar-heading">
+                        <a href="customer-catalog.html" th:href="@{/customer-catalog}">
+                            <i class="fas fa-store" style="padding-right:10px"></i> Self-Checkout</a>
+                    </h5>
+                </div>
+            </li>
+            <li sec:authorize="hasAnyRole('CUSTOMER')">
+                <a href="catalog.html" th:href="@{/customer-catalog}" ><i class="fas fa-angle-right"></i> Product List</a>
+                <br>
+                <a href="cart.html" th:href="@{/cart}" ><i class="fas fa-angle-right"></i> Cart</a>
+            </li>
+
+
+            <!-- Order system -->
+            <li class="li-heading" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')">
+                <div class="col btn-group">
+                    <h5 class="sidebar-heading">
+                        <a href="product-orders.html" th:href="@{/product-orders}">
+                            <i class="fas fa-shipping-fast" style="padding-right:10px"></i> Orders</a>
+                    </h5>
+                    <h5 class="sidebar-heading">
+                        <a data-bs-toggle="collapse" href="#collapseOrders" role="button" aria-expanded="false" aria-controls="collapseOrders">
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </h5>
+                </div>
+            </li>
+            <li>
+                <div class="collapse" id="collapseOrders">
+                    <a href="new-product-order.html" th:href="@{/new-product-order}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')"><i class="fas fa-angle-right"></i> Create Product Order</a>
+                    <br>
+                    <a href="product-orders.html" th:href="@{/product-orders}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')"><i class="fas fa-angle-right"></i> Product Orders</a>
+                </div>
+            </li>
+
+
+            <!-- Doc Checkout -->
+            <li class="li-heading" sec:authorize="hasAnyRole('DOC')">
+                <div class="col btn-group">
+                    <h5 class="sidebar-heading">
+                        <a href="doc-catalog.html" th:href="@{/doc-catalog}">
+                            <i class="fas fa-clinic-medical" style="padding-right:10px"></i> Doc Checkout</a>
+                    </h5>
+                    <h5 class="sidebar-heading">
+                        <a data-bs-toggle="collapse" href="#collapseDoc" role="button" aria-expanded="false" aria-controls="collapseDoc">
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </h5>
+                </div>
+            </li>
+            <li>
+                <div class="collapse" id="collapseDoc">
+                    <a href="doc-catalog.html" th:href="@{/doc-catalog}" ><i class="fas fa-angle-right"></i> Doc Catalog</a>
+                    <br>
+                    <a href="cart.html" th:href="@{/cart}" sec:authorize="hasAnyRole('BOSS','DOC')"><i class="fas fa-angle-right"></i> Doc Cart</a>
+                </div>
+            </li>
+
+
+            <!-- User Login/out & Darkmode switcher -->
+            <li class="li-heading">
+                <div class="col">
+                    <button class="btn button-toggle-theme"><i class="fas fa-adjust"></i> Toggle Theme</button>
+                </div>
+            </li>
+
+            <li class="li-heading useracc" sec:authorize="isAuthenticated()">
+                <div class="col">
+                    <p>
+                        <i class="fas fa-user"></i>
+                        <b th:text="${'Hello ' + #authentication?.name}"> Hallo Nutzer</b>
+                    </p>
+
+                    <p sec:authorize="!isAuthenticated()" >Please login to continue.</p>
+                    <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="btn btn-primary" role="button"
+                       th:text="Login">Login</a>
+                    <form class="item" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn btn-primary" th:text="Logout">Logout</button>
+                    </form>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- main page content -->
+    <div class="content-wrapper">
+
+        <section layout:fragment="content"></section>
+
+    </div>
+</div>
+
+
+<!-- custom script -->
+<script th:src="@{resources/script/script.js}" src="../static/resources/script/script.js"></script>
+<!-- standard bootstrap ressources -->
+<script th:src="@{/webjars/popper.js/2.10.2/umd/popper.min.js}"
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.min.js}"
+        rc="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+</html>

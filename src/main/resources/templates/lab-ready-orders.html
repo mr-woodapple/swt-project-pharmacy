@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout.html}">
+<head>
+
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Ready Laboratory Orders</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <form id="form_search" name="form_search" method="get" th:action="@{/search-lab-ready-orders}"
+                      class="form-inline">
+                    <div class="input-group mb-3">
+                        <input class="form-control" placeholder="Search for..." type="text" name="search"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="ui positive message" th:if="${succes}" th:text="${succes}"></div>
+        <div class="ui negative message" th:if="${noresult==true}" th:text="'Noch matching product found'"></div>
+        <br></br>
+        <div class="row">
+            <div class="col sub-wrapper">
+                <table class="table table-striped">
+
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <!-- <th>Quantity</th> -->
+                        <th>Ingredients</th>
+                        <th>Single Price</th>
+                        <th>Customer Name</th>
+                        <th>Customer Contact</th>
+                        <th>Order Date</th>
+                        <th sec:authorize="hasAnyRole('EMPLOYEE','BOSS')">Actions</th>
+
+
+                    </tr>
+                    </thead>
+
+                    <tbody th:remove="all-but-first">
+                    <tr th:each="article : ${catalog}">
+                        <td th:text="${article.getID()}"></td>
+                        <td th:text="${article.name}"></td>
+                        <!-- <td th:text="${article.quantity}"></td> -->
+                        <td th:text="${article.description}"></td>
+                        <td th:text="${article.price}"></td>
+                        <td th:text="${article.customerName}"></td>
+                        <td th:text="${article.customerTel}"></td>
+                        <td th:text="${article.orderDate}"></td>
+                        <td  sec:authorize="hasAnyRole('EMPLOYEE','BOSS')">
+                            <form class="ui form" method="post" th:action="@{/cart}">
+                                <input type="hidden" name="pid" value="0" th:value="${article.id}"/>
+                                <button type="submit" class="btn btn-primary" th:text="#{catalog.addProduct}">add to
+                                    cart
+                                </button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

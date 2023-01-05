@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}" lang="en">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>New Order in Laboratory</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <h5>Please enter following details to order in Lab:</h5>
+                <br>
+
+                <div class="ui items">
+                    <form method="post" th:action="@{/addLabOrder}">
+
+                        <div class="form mb-3">
+                            <label for="name" class="form-label">Product</label>
+                            <input class="form-control" id="name" type="text" name="name" placeholder="Enter product name"
+                                 value="Medical Ointment 30g"  aria-label=".form-control-lg example" required maxlength="30" minlength="2">
+                            <div class="invalid-feedback">
+                                Invalid Product Name!
+                            </div>
+                        </div>
+
+                        <div class="form mb-3">
+                            <label for="description" class="form-label">Necessary Ingredients</label>
+                            <input class="form-control " id="description" type="text" name="description" placeholder="Enter ingredients"
+                                   value="A lot about medical ointment" aria-label=".form-control-lg example" required minlength="1" maxlength="100">
+                            <div class="invalid-feedback">
+                                If there are no ingredients please also note in the field.
+                            </div>
+                        </div>
+
+                        <div class="form mb-3">
+                            <label for="customerName" class="form-label"></i>Customer Name</label>
+                            <input class="form-control" id="customerName" type="text" name="customerName" placeholder="Enter customer name"
+                                  value="Luca Rizzo" aria-label=".form-control-lg example" required maxlength="30" minlength="2">
+                            <div class="invalid-feedback">
+                                Customer name is not valid!
+                            </div>
+                        </div>
+
+                        <div class="form mb-3">
+                            <label for="customerTel" class="form-label">Customer Tel./E-mail</label>
+                            <input class="form-control " id="customerTel" type="text" name="customerTel" placeholder="Enter customer e-mail or telephone"
+                                  value="0178453692" aria-label=".form-control-lg example" required minlength="7" maxlength="35">
+                        </div>
+                        <div class="invalid-feedback">
+                            Contact Data is not valid!
+                        </div>
+
+                        <div class="row">
+                            <div class="col d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary" style="margin-top: 50px">Submit</button>                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

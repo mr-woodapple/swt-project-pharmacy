@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2 th:text="#{accounting.openPositions}">Open Orders</h2>
+                <br>
+                <p>
+                    <i class="fas fa-info-circle"></i>
+                    <i th:text="#{accounting.openPositions.actionInfo}">Uncompleted orders. Process these orders with "Pay & Close Order" button on the right once
+                        the payment was received.</i>
+                </p>
+            </div>
+        </div>
+
+
+        <!-- list of open orders -->
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col">Username</th>
+                        <th class="col">Order Identifier</th>
+                        <th class="col">Date</th>
+                        <th class="col">Open Total</th>
+                        <th class="col d-flex justify-content-end">Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${openOrders} ">
+                        <td th:text="${order.userAccount.id}"></td>
+                        <td th:text="${order.id}"></td>
+                        <td th:text="${#temporals.format(order.dateCreated, 'dd.MM.yyyy HH:mm')}"></td>
+                        <td th:text="${order.total}"></td>
+                        <td class="d-flex justify-content-end">
+
+                            <form class="ui form" method="post" th:action="@{/markAsPayed}">
+                                <input type="hidden" name="identifier" value="0" th:value="${order.id}"/>
+                                <button type="submit" class="btn btn-primary" th:text="#{accounting.openOrders.completeOrderButton}">Pay & Close Order</button>
+                            </form>
+
+                        </td>
+
+                        <!-- Could add a detail page to generate one invoice from multiple orders
+                        <td class="d-flex justify-content-end"><a class="btn btn-primary" href="open-orders.html" th:href="@{/open-orders-detail}" role="button">View Details</a></td>
+                        -->
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+</section>
+</body>
+</html>

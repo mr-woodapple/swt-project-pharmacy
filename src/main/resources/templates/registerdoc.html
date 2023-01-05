@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html(title=#{register.title})}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Add new Doctor</h2>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <h5>Please enter information:</h5>
+                <p>
+                    <i class="fas fa-info-circle"></i>
+                    <i>Note that the information can't be changed once created.</i>
+                </p>
+
+
+                <form method="post" role="form" class="ui form" id="form" th:action="@{/registerdoc}">
+
+                    <div class="field">
+                        <label for="docname" class="form-label">Name </label>
+                        <input class="form-control" id="docname" type="text" name="docname" value="Gemeinschaftspraxis für Nuklearmedizin"
+                               placeholder="Name" required>
+                        <div class="invalid-feedback">
+                            Name is empty!
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Save Doctor</button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>

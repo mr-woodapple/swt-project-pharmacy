@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+  <div class="container-fluid">
+
+      <div class="row">
+          <div class="col sub-wrapper">
+            <h2>All Products</h2>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col sub-wrapper">
+              <form id="form_search" name="form_search" method="get" th:action="@{/search-article}" class="form-inline">
+                  <div class="input-group mb-3">
+                      <input class="form-control" placeholder="Search for..." type="text" name="search" />
+                      <button type="submit" class="btn btn-outline-primary">Search</button>
+                  </div>
+              </form>
+              <a class="btn btn-outline-dark" href="product-overview.html" th:href="@{/product-overview}" >All</a>
+              <a class="btn btn-outline-dark" href="product-overview.html" th:href="@{/prescription/{num}(num = 2)}" >Prescription</a>
+              <a class="btn btn-outline-dark" href="product-overview.html" th:href="@{/prescription-free/{num}(num = 2)}">Prescription-free</a>
+              <a class="btn btn-outline-dark" href="product-overview.html" th:href="@{/order}">Orders</a>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col sub-wrapper">
+              <a th:href="@{/newArticle}" class="btn btn-primary" role="button" href="add-article.html">New Article</a>
+              <a th:href="@{/inventory-overview}" class="btn btn-primary" role="button" href="restock.html">Inventory overview</a>   
+          </div>
+      </div>      
+
+
+    <div class="row">
+        <div class="col sub-wrapper">
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Quantity in stock</th>
+                    <th scope="col">Price</th>
+                    <th scope="col" class="text-end">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody th:remove="all-but-first">
+
+                <tr th:each="item : ${catalog}">
+
+
+                    <td th:text="${item.product.getID()}"></td>
+                    <td th:text="${item.product.name}"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td th:text="${item.product.price}"></td>
+
+                    <td class="text-end">
+                        <a th:href="@{/article/{id}(id=${item.product.id})}" class="btn btn-primary" role="button" href="article-details.html" >Details</a>
+                        <a th:href="@{/editArticle/{id}(id=${item.product.id})}"class="btn btn-danger" role="button" href="edit-article.html" >Edit</a>
+                        <a th:href="@{/removeArticle/{id}(id=${item.product.id})}" class="btn btn-danger" role="button" onclick="remove()" href="product-overview.html" >Delete</a>
+                        <script>
+                            function remove() {
+                                if (confirm("Are you sure you want to permanently delete this product?") == true){alert("Product removed from Inventory.");}
+                                else {alert("Changes not saved!");}
+                            }
+                        </script>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+   </div>
+
+</section>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Open positions for Doc xx</h2>
+            </div>
+        </div>
+
+
+        <!-- list of invoices -->
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h3>Open positions</h3>
+                <br>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="col">Open position</th>
+                            <th class="col">Open Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>215,99 €</td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td>215,99 €</td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td>215,99 €</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper d-flex justify-content-end">
+
+                <form class="ui form" method="post" th:action="@{/createInvoice}">
+                    <button type="submit" class="btn btn-primary">Create Invoice</button>
+                </form>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</section>
+</body>
+</html>

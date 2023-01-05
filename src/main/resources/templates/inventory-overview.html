@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+  <div class="container-fluid">
+
+      <div class="row">
+          <div class="col sub-wrapper">
+            <h2>Inventory</h2>
+          </div>
+      </div>
+      
+      <div class="row">
+          <div class="col sub-wrapper">
+              <form id="form_search" name="form_search" method="get" th:action="@{/search-inventory}" class="form-inline">
+                  <div class="input-group mb-3">
+                      <input class="form-control" placeholder="Search for..." type="text" name="search" />
+                  </div>
+              </form>
+              <a class="btn btn-outline-dark" href="product-overview.html" th:href="@{/inventory-overview}" >All</a>
+              <a class="btn btn-outline-dark" href="product-overview.html" th:href="@{/prescription/{num}(num =1)}" >Prescription</a>
+              <a class="btn btn-outline-dark" href="product-overview.html" th:href="@{/prescription-free/{num}(num=1)}">Prescription-free</a>  
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col sub-wrapper">
+			  <a th:href="@{/inventory-reorder}" class="btn btn-primary" role="button" href="inventory-reorder.html">Reorder Products</a>
+              <a th:href="@{/inventory-restock}" class="btn btn-primary" role="button" href="inventory-restock.html">Restock Products</a>
+              <a th:href="@{/inventory-expiry}" class="btn btn-danger" role="button" href="inventory-expiry.html" style="float:right" >Print expiry List</a>
+              <a th:href="@{/inventory-reject}" class="btn btn-danger" role="button" href="inventory-reject.html" style="float:right">Reject Products</a>
+          </div>
+      </div>    
+      
+      
+      <div class="ui positive message" th:if="${succes}" th:text="${succes}"></div>
+      <div class="ui negative message" th:if="${noresult==true}" th:text="'No matching product found'"></div>
+      
+	  <div class="row">
+      <div class="col sub-wrapper">
+      <p>
+         <i class="fas fa-info-circle"></i>
+         <i>Select required Items for further actions.</i>
+
+      </p>
+      <br>
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Quantity in stock</th>
+                  <th scope="col" class="text-end">Select Items</th>
+              </tr>
+          </thead>
+
+          <tbody th:remove="all-but-first">
+
+              <tr th:each="item : ${catalog}">
+
+              
+                  <td th:text="${item.product.getID()}"></td>
+                  <td th:text="${item.product.name}"></td>
+                  <td th:text="${item.quantity}"></td>
+ 				  <td>
+                            <form class="form-inline" role="form" th:action="@{/select-quantity}" method="post" align="right">
+                                    <input type="hidden" name="pid" value="" th:value="${item.product.id}"/>
+                                    <button type="submit" class="btn btn-outline-primary" >Add to list</button>
+                            </form>
+                        </td>
+                  <td class="text-end">
+
+                    </td>
+                </tr>
+            </tbody>
+      </table>
+   </div>
+   </div>
+
+   </div>
+
+</section>
+
+</body>
+</html>
+

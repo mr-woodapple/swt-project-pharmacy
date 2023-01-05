@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+  <!-- Only shown to authenticated users (logged in) -->
+  <div class="container-fluid" sec:authorize="isAuthenticated()">
+    <div class="row">
+      <div class="col sub-wrapper">
+
+        <h2>Welcome to our Pharmacy</h2>
+        <br>
+        <div class="alert alert-success" role="alert">
+          You're now logged in.
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row" sec:authorize="isAuthenticated()">
+      <div class="col sub-wrapper-dogtor">
+        <img src="resources/img/TrustMeImADogtor.png" style="width: 15%;">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col sub-wrapper" sec:authorize="hasAnyRole('EMPLOYEE')">
+        <h2>Messages</h2>
+        <p>
+          <i class="fas fa-info-circle"></i>
+          <i>Here are some really important messages from your boss. Well, important depends on who you are... ;)</i>
+        </p>
+        <br>
+
+        <!-- Displayed if there are now MessagesEntrys available -->
+        <div class="alert alert-dark" th:if="${messageList.empty}">
+          <h5> 👻 Nothing to see...</h5>
+          <p>There are currently no messages available. If you could finally start working now??</p>
+        </div>
+
+        <div class="alert alert-primary" role="alert" th:each="message : ${messageList}">
+          <h5 class="alert-heading" th:text="${message.title}">Heading</h5>
+          <p th:text="${message.text}">Message text</p>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <!-- Only shown to unauthenticated users (not logged in) -->
+  <div class="container-fluid" sec:authorize="isAnonymous()">
+    <div class="row">
+      <div class="col sub-wrapper login-form">
+
+
+
+        <!-- Tab switcher for loggin in as a doc or normal pharmacy employee -->
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Pharmacy Login</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Doctor Login</button>
+          </li>
+        </ul>
+        <br>
+
+        <!-- Tab for logging in as a normal pharmacy employee or boss -->
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <h2>Login</h2>
+            <p>Please enter username & password to continue!</p>
+
+            <br>
+
+            <form th:action="@{/login}" method="post">
+
+              <div class="field">
+                <label th:text="#{login.username}" for="username">Username</label>
+                <input class="form-control" type="text" id="username" name="username" autofocus="autofocus" placeholder="Username" required/>
+                <br/>
+              </div>
+
+              <div class="field">
+                <label th:text="#{login.password}" for="password">Password</label>
+                <input class="form-control" type="password" id="password" name="password" placeholder="Password" required/>
+                <br/>
+              </div>
+
+              <br>
+
+              <div class="d-grid gap-2">
+                <button type="submit" th:text="#{login.login}" class="btn btn-primary btn-lg" >Log in</button>
+              </div>
+              <br>
+              <div th:if="${#request.getParameter('error') != null}" class="alert alert-danger" role="alert">
+                The login you entered was wrong. Please try again.
+              </div>
+
+            </form>
+          </div>
+
+          <!-- Tab for logging in as a doc using the backdoor -->
+          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <h2>Doc Login</h2>
+            <p>Please enter a 4-digit PIN to continue!</p>
+
+            <form th:action="@{/login}" method="post">
+
+              <div class="field">
+                <label for="pin">Pin</label>
+                <input class="form-control" type="password" id="pin" name="username" autofocus="autofocus" placeholder="Pin" required/>
+                <br/>
+              </div>
+
+              <div class="field">
+                <input class="form-control" type="hidden" id="password" name="password" value="password" required/>
+              </div>
+
+
+
+                <div class="row">
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '1';">1</button>
+                  </div>
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '2';">2</button>
+                  </div>
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '3';">3</button>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '4';">4</button>
+                  </div>
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '5';">5</button>
+                  </div>
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '6';">6</button>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '7';">7</button>
+                  </div>
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '8';">8</button>
+                  </div>
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '9';">9</button>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value.slice(0, -1);">
+                      <i class="fas fa-chevron-left"></i>
+                    </button>
+                  </div>
+                  <div class="col d-flex justify-content-center btn-pinpad-frame">
+                    <button type="button" class="btn btn-pinpad" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '0';">0</button>
+                  </div>
+                  <div class="col d-flex justify-content-center btn-pinpad-frame-primary">
+                    <button type="submit" class="btn btn-pinpad">Login</button>
+                  </div>
+                </div>
+
+
+              <br>
+              <div th:if="${#request.getParameter('error') != null}" class="alert alert-danger" role="alert">
+                The login you entered was wrong. Please try again.
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+</section>
+</body>
+</html>
+

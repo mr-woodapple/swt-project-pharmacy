@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <section layout:fragment="content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col sub-wrapper">
+                        <h2 th:text="#{cart.heading}">Cart</h2>
+                        <br>
+                        <a sec:authorize="hasAnyRole('DOC')" th:href="@{/doc-catalog}" class="btn btn-outline-dark" role="button" href="doc-catalog.html">Back to Catalog</a>
+                        <a sec:authorize="hasAnyRole('EMPLOYEE, BOSS')" th:href="@{/catalog}" class="btn btn-outline-dark" role="button" href="catalog.html">Back to Catalog</a>
+                    </div>
+                </div>
+
+                <!-- Display if cart is empty -->
+                <div class="row" th:if="${cart.empty}">
+                    <div class="col sub-wrapper">
+                        <h4 th:text="#{cart.empty}">Cart is empty.</h4>
+                        <p>
+                            <i class="fas fa-info-circle"></i>
+                            <i th:text="#{cart.empty.detail}">Please add an item to your cart.</i>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Work in progress -->
+                <div th:if="${message}" th:text="${message}" class="text"></div>
+
+                <!-- Display if there are products in cart -->
+                <div class="row" th:unless="${cart.empty}">
+                    <div class="col sub-wrapper">
+
+                        <!-- Table with products in the cart -->
+                        <table class="table table-striped">
+
+                            <thead>
+                                <tr>
+                                    <th th:text="#{cart.itemName}">Product</th>
+                                    <th th:text="#{cart.count}">Quantity</th>
+                                    <th>Remove</th>
+                                    <th th:text="#{cart.price}" class="text-end">Price</th>
+                                </tr>
+                            </thead>
+
+                            <tbody th:remove="all-but-first">
+                                <tr th:each="item : ${cart}">
+                                    <td th:text="${item.productName}">Aspirin</td>
+                                    <td>
+                                        <form class="form-inline" role="form" th:action="@{/cart/{id}/updatecart(id=${item.id})}" method="post">
+                                            <div class="input-group mb-3">
+                                                <input type="hidden" name="pid" value="0" th:value="${item.id}"/>
+                                                <input type="hidden" name="name" value="0" th:value="${item.product.id}"/>
+                                                <input class="form-control" id="number" type="number" name="number" min="1" step="1" th:value="${item.quantity}" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;"/>
+                                                <button type="submit" class="btn btn-outline-primary">Update</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form sec:authorize="hasAnyRole('EMPLOYEE, BOSS, DOC')" class="form-inline" role="form" method="post" th:action="@{/remove}">
+                                            <input type="hidden" name="pid" value="0" th:value="${item.id}"/>
+                                            <button class="btn btn-danger" th:text="#{cart.removeOneProduct}">Remove</button>
+                                        </form>
+                                    </td>
+                                    <td th:text="${{item.price}}" class="text-end">4,95 Euro</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Total price -->
+                        <div class="col d-flex justify-content-end">
+                            <h5>
+                                <b><div class="label" th:text="#{cart.total}">Total:</div></b>
+                            </h5>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <h5>
+                                <b><div class="value"><span th:text="${{cart.price}}">990</span></div></b>
+                            </h5>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- NEW BUTTON BAR (empty cart, buy) -->
+                <div class="d-flex justify-content-end sub-wrapper button-bar-checkout" th:unless="${cart.empty}">
+
+                    <div>
+                        <form sec:authorize="hasAnyRole('EMPLOYEE, BOSS, CUSTOMER, DOC')" class="ui form" method="post" th:action="@{/delete}">
+                            <button class="btn btn-danger btn-lg" onclick="alert('The shopping cart was emptied.')" th:text="#{cart.removeProducts}">Clear</button>
+                        </form>
+                    </div>
+
+                    <div style="margin-left: 10px;" sec:authorize="hasAnyRole('EMPLOYEE, BOSS, CUSTOMER, DOC')">
+                        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalToggleLabel">Select Payment Method</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <i class="fas fa-info-circle"></i>
+                                        Please select whether you want to pay with card or cash. You can generate a receipt in the next step.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="fas fa-money-bill"></i>&nbsp Cash</button>
+                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="far fa-credit-card"></i>&nbsp Card</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalToggleLabel2">Order confirmed</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Thank you very much for shopping.
+                                        <br>
+                                        If you want a receipt, please click "Print Receipt" below.
+                                    </div>
+                                    <!-- Checkout for Boss, Customer and Employee -->
+                                    <div class="modal-footer" sec:authorize="hasAnyRole('EMPLOYEE, BOSS, CUSTOMER')">
+                                        <form sec:authorize="hasAnyRole('EMPLOYEE, BOSS, CUSTOMER')" class="ui form" method="post" th:action="@{/print}">
+                                            <button type="submit" class="btn btn-secondary"><i class="fas fa-print"></i>&nbsp Finish & Print Receipt</button>
+                                        </form>
+                                        <form  class="ui form" method="post" th:action="@{/checkout}">
+                                            <button class="btn btn-primary"><i class="fas fa-check"></i>&nbsp Finish</button>
+                                        </form>
+                                    </div>
+                                    <!--Checkout for Doc (mapped to another checkout method and without print button)-->
+                                    <div class="modal-footer" sec:authorize="hasAnyRole('DOC')">
+                                        <form  class="ui form" method="post" th:action="@{/docCheckout}">
+                                            <button class="btn btn-primary"><i class="fas fa-check"></i>&nbsp Finish</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn btn-primary btn-lg" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Pay & Checkout</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+    </body>
+</html>

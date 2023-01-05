@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>All Employees</h2>
+                <br>
+                <a href="register.html" th:href="@{/register}" class="btn btn-primary" role="button">Add Employee</a>
+                <a href="messages.html" th:href="@{/messages}" class="btn btn-primary" role="button">Create & View Messages</a>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <div class="row">
+
+                    <div class="col-sm-3" th:each=" employee : ${employeeList}">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${employee.firstname + ' ' + employee.lastname}">Name</h5>
+                                <h6 class="card-subtitle mb-2 text-muted" th:text="${employee.userAccount.getRoles().toList()}">Role</h6>
+                                <br>
+                                <table>
+                                    <tr>
+                                        <td><b>Username:</b>&nbsp</td>
+                                        <td th:text="${employee.username}"></td>
+                                    </tr>
+                                </table>
+                                <br>
+                                <a th:href="@{/employee/{id}(id=${employee.id})}" class="btn btn-primary" href="employee-detail.html" role="button">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>All Doctors</h2>
+                <br>
+                <a href="register.html" th:href="@{/registerdoc}" class="btn btn-primary" role="button">Add Doctor</a>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <div class="row">
+
+                    <div class="col-sm-3" th:each=" doc : ${docList}">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${doc.email}">Name</h5>
+                                <br>
+                                <table>
+                                    <tr>
+                                        <td><b>Pin:</b>&nbsp</td>
+                                        <td th:text="${doc.username}"></td>
+                                    </tr>
+                                </table>
+                                <br>
+                                <a href="employee-overview.html" th:href="@{/deleteDoc/{username}(username=${doc.username})}" class="btn btn-danger" onclick="return window.confirm('Are you sure you want to delete this Doctor?');" role="button">Delete Doctor</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

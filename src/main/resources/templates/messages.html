@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Create Message</h2>
+                <p>
+                    <i class="fas fa-info-circle"></i>
+                    <i>Messages allow an quick way to show very important notes to your employees on the login page.</i>
+                </p>
+            </div>
+        </div>
+
+        <!-- Form to create new messages -->
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h5>Please enter title and text of your new message.</h5>
+                <p>
+                    <i class="fas fa-info-circle"></i>
+                    <i>Click save to make the message public to your employees.</i>
+                </p>
+                <br>
+
+                <div class="ui items">
+                    <form method="post" th:action="@{/addMessage}">
+
+                        <div class="form mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input class="form-control " id="title" type="text" name="title" placeholder="Enter title" aria-label=".form-control-lg example" required>
+                            <div class="invalid-feedback">
+                                Title is empty!
+                            </div>
+                        </div>
+
+                        <div class="form mb-3">
+                            <label for="text" class="form-label">Text</label>
+                            <input class="form-control " id="text" type="text" name="text" placeholder="Enter text" aria-label=".form-control-lg example" required>
+                            <div class="invalid-feedback">
+                                Text box is empty!
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary" style="margin-top: 50px">Create Message</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Displays all currently active messages and allows to delete them -->
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <h2>Active messages</h2>
+                <p>
+                    <i class="fas fa-info-circle"></i>
+                    <i>Here are all messages that are currently active and displayed to your employees. You can delete
+                    them individually if you want to.</i>
+                </p>
+
+                <form th:action="@{/login}" method="post">
+                    <div class="alert alert-primary alert-dismissible" role="alert" th:each="message : ${messageList}" th:id="message+${message.id}">
+                        <h5 class="alert-heading" th:text="${message.title}">Heading</h5>
+                        <p th:text="${message.text}">Message text</p>
+
+                        <form sec:authorize="hasRole('BOSS')">
+                            <a th:href="@{/removeEntry/{id}(id=${message.id})}" class="btn-close"></a>
+                        </form>
+                    </div>
+                </form>
+
+                <div class="alert alert-dark" th:if="${messageList.empty}">
+                    <h5> 👻 Nothing to see...</h5>
+                    <p>There are no active messages. You can add a message with the form above.</p>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

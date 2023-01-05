@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <section layout:fragment="content">
+
+            <div class="container-fluid">
+
+
+                <div class="row">
+                    <div class="col sub-wrapper">
+                        <h2>Reject Products</h2>
+                    </div>
+                </div>
+
+                <!-- Display if no rejected items -->
+                <div class="row" th:if="${cart.empty}">
+                    <div class="col sub-wrapper">
+                        <h4>No items in reject list</h4>
+                        <p>
+                            <i class="fas fa-info-circle"></i>
+                            <i>Please add items to list</i>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Display if there are products in reject list -->
+                <div class="row" th:unless="${cart.empty}">
+                    <div class="col sub-wrapper">
+
+                        <!-- Table with products to be rejected -->
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                            </tr>
+                            </thead>
+                            <tbody th:remove="all-but-first">
+
+                            <tr th:each="item : ${cart} ">
+                                <td th:text="${item.product.name}"></td>
+                                <td>
+                                    <form class="form-inline" role="form" th:action="@{/update-reject/{id}(id=${item.id})}" method="post">
+                                        <div class="input-group mb-3">
+                                            <input type="hidden" name="pid" value="0" th:value="${item.id}"/>
+                                            <input type="hidden" name="name" value="0" th:value="${item.product.id}"/>
+                                            <input class="form-control" id="number" type="number" name="number" min="0" step="1" th:value="${item.quantity}" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;"/>
+                                            <button type="submit" class="btn btn-outline-primary">Update</button>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+                
+               <div class="row" th:unless="${cart.empty}">
+               		<div class="col sub-wrapper">
+						<div class="field">
+                    		<label style="font-weight:bold;" for="description" class="form-label">Reasons for item rejections:</label>
+                    		<input style="height:100px;" class="form-control " id="description" type="text" name="description" value="" aria-label=".form-control-lg example" required>
+                    		<div class="invalid-feedback"> Please provide a description. </div>										
+                		</div>
+                	</div>
+				</div>
+
+           <div class="row justify-content-end button-bar-checkout sub-wrapper" th:unless="${cart.empty}"> 
+           
+           				<div class="col-1 d-flex justify-content-end">
+							<form class="ui form" method="post" th:action="@{/cancel}">
+                                <button type="submit" class="btn btn-danger" onclick="alert('Order has been canceled!')"  >Cancel</button>
+							</form>
+                        </div>
+                        
+                        <div class="col-1 d-flex justify-content-end">
+                            <form sec:authorize="hasAnyRole('EMPLOYEE, BOSS, CUSTOMER')" class="ui form" method="post" th:action="@{/reject}">
+                                <button type="submit" class="btn btn-danger" onclick="alert('Please remove items from inventory!')" >Remove from Inventory</button>
+                            </form>
+                        </div>
+                        
+                        
+
+                </div>
+
+            </div>
+
+        </section>
+    </body>
+</html>

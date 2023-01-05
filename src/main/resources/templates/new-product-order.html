@@ -1,0 +1,127 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>New Product Order</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <h5>Please enter following details to order a Product:</h5>
+                <br>
+
+                <div class="ui items">
+                    <form method="post" th:action="@{/addProductOrder}">
+
+                        <div class="form mb-3">
+                            <label for="name" class="form-label">Product </label>
+                            <input class="form-control " id="name" type="text" name="name" placeholder="Enter product name"
+                            value="Ibuprofen 600mg, 30 Stück" aria-label=".form-control-lg example" required maxlength="30" minlength="2">
+                            <div class="invalid-feedback">
+                                Product name is empty!
+                            </div>
+                        </div>
+
+                        <div class="form mb-3">
+                            <label for="description" class="form-label">Particularities</label>
+                            <input class="form-control " id="description" type="text" name="description" placeholder="Enter particularities"
+                            value="-" aria-label=".form-control-lg example" required maxlength="30" minlength="2">
+                            <div class="invalid-feedback">
+                                If there are no special features enter simply: -
+                            </div>
+                        </div>
+
+                        <div class="form mb-3">
+                            <label for="customerName" class="form-label">Customer Name</label>
+                            <input class="form-control " id="customerName" type="text" name="customerName" placeholder="Enter customer name"
+                            value="Irina Müller" aria-label=".form-control-lg example" required maxlength="30" minlength="2">
+                            <div class="invalid-feedback">
+                                Customer name is not valid!
+                            </div>
+                        </div>
+                        <div class="form mb-3">
+                            <label for="customerTel" class="form-label">Customer Tel./E-mail</label>
+                            <input class="form-control " id="customerTel" type="text" name="customerTel" placeholder="Enter customer e-mail or telephone"
+                            value="01574573529" aria-label=".form-control-lg example" required maxlength="30" minlength="2">
+                            <div class="invalid-feedback">
+                                Contact Data is not valid!
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary" style="margin-top: 50px">Order</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <!--
+    <div class="container-fluid" id="newOrder">
+        <header>
+            <h3>Please enter following details to order a Product:</h3>
+        </header>
+        <div class="ui items">
+            <form method="post" th:action="@{/addProductOrder}">
+
+                <div class="field">
+                    <label for="name" class="form-label">Product </label>
+                    <input class="form-control " id="name" type="text" name="name" value="" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Product name is empty!
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="description" class="form-label">Particularities</label>
+                    <input class="form-control " id="description" type="text" name="description" value="" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        If there are no special features: -
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="customerName" class="form-label"><i class="fa fa-user" style="margin-right:3px "></i> Customer Name</label>
+                    <input class="form-control " id="customerName" type="text" name="customerName" value="" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Customer name is not valid!
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="customerTel" class="form-label">Customer Tel./E-mail</label>
+                    <input class="form-control " id="customerTel" type="text" name="customerTel" value="" aria-label=".form-control-lg example" required>
+                    <div class="invalid-feedback">
+                        Contact Data is not valid!
+                    </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 50px">Order</button>
+            </form>
+        </div>
+    </div>
+    -->
+</section>
+</body>
+</html>

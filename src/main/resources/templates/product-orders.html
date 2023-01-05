@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Current Product Orders</h2>
+                <br>
+                <a class="btn btn-primary" href="new-product-order.html" th:href="@{/new-product-order}" role="button" >Create Product Order</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <form id="form_search" name="form_search" method="get" th:action="@{/search-orders}"
+                      class="form-inline">
+                    <div class="input-group mb-3">
+                        <input class="form-control" placeholder="Search for..." type="text" name="search"/>
+                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Particularities</th>
+                        <th>Price</th>
+                        <th>Insert Price</th>
+                        <th>Customer Name</th>
+                        <th>Customer Contact</th>
+                        <th>Status</th>
+                        <th>Order Date</th>
+                    </tr>
+                    </thead>
+
+                    <tbody th:remove="all-but-first">
+                    <tr th:each="article :${catalog}">
+                        <td th:text="${article.getID()}"></td>
+                        <td th:text="${article.name}"></td>
+                        <td th:text="${article.description}"></td>
+                        <td th:text="${article.price}"></td>
+                        <td>
+                            <form method="post" th:action="@{/orders/{article}/updateprice(article=${article.id})}">
+                                <input id="price" type="number" min="0.01" max="10000" name="price" step="0.01" th:value="${article.price}" required>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </td>
+                        <td th:text="${article.customerName}"></td>
+                        <td th:text="${article.customerTel}"></td>
+                        <td th:text="${article.type}"></td>
+                        <td th:text="${article.orderDate}"></td>
+                        <td>
+                            <form class="ui form" method="post" th:action="@{/cart}">
+                                <input type="hidden" name="pid" value="0" th:value="${article.id}"/>
+                                <button type="submit" class="btn btn-primary" th:text="#{catalog.addProduct}">add to
+                                    cart
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <section layout:fragment="content">
+
+            <div class="container-fluid">
+
+
+                <div class="row">
+                    <div class="col sub-wrapper">
+                        <h2>Reorder list</h2>
+                    </div>
+                </div>
+
+                <!-- Display if cart is empty -->
+                <div class="row" th:if="${cart.empty}">
+                    <div class="col sub-wrapper">
+                        <h4>Order list is empty.</h4>
+                        <p>
+                            <i class="fas fa-info-circle"></i>
+                            <i>Please add an item to the order list</i>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Display if there are products in cart -->
+                <div class="row" th:unless="${cart.empty}">
+                    <div class="col sub-wrapper">
+
+                        <!-- Table with products in the cart -->
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th class="text-end">Price</th>
+                            </tr>
+                            </thead>
+                            <tbody th:remove="all-but-first">
+
+                            <tr th:each="item : ${cart} ">
+                                <td th:text="${item.productName}"></td>
+                                <td>
+                                    <form class="form-inline" role="form" th:action="@{/update-quantity/{id}(id=${item.id})}" method="post">
+                                        <div class="input-group mb-3">
+                                            <input type="hidden" name="pid" value="0" th:value="${item.id}"/>
+                                            <input class="form-control" id="number" type="number" name="number" min="0" max="500" step="1" th:value="${item.quantity}" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;"/>
+                                            <button type="submit" class="btn btn-outline-primary">Update</button>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td th:text="${item.price}" class="text-end"></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                        <!-- Total price -->
+                        <div class="col d-flex justify-content-end">
+                            <h5>
+                                <b><div class="label">Total:</div></b>
+                            </h5>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <h5>
+                                <b><div class="value"><span th:text="${{cart.price}}"></span></div></b>
+                            </h5>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Button bar (print receipt, empty cart, buy) -->
+                <div class="row justify-content-end button-bar-checkout sub-wrapper" th:unless="${cart.empty}">
+
+
+           				<div class="col-2 d-flex justify-content-end">
+							<form class="ui form" method="post" th:action="@{/cancel}">
+                                <button type="submit" class="btn btn-danger" onclick="alert('Order has been canceled!')" >Cancel</button>
+							</form>
+                        </div>
+
+                        <div class="col-2 d-flex justify-content-end">
+                            <form sec:authorize="hasAnyRole('EMPLOYEE, BOSS, CUSTOMER')" class="ui form" method="post" th:action="@{/reorder}">
+                                <button type="submit" class="btn btn-primary" onclick="alert('Order has been placed!')">Order Products</button>
+                            </form>
+                        </div>
+
+                </div>
+
+            </div>
+
+        </section>
+    </body>
+</html>

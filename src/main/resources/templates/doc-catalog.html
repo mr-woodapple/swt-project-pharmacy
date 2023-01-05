@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Doc Catalog</h2>
+            </div>
+        </div>
+
+            <!--
+            <div class="field">
+                <label for="name" class="form-label">Product </label>
+                <input class="form-control " id="name" type="text" name="name" value="" aria-label=".form-control-lg example" required>
+            </div>
+            -->
+            <div class="col sub-wrapper">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody th:remove="all-but-first">
+                    <tr th:each="article : ${catalog}">
+                        <td th:text="${article.name}">- Dispersal aspirin 300mg 32 tablets</td>
+
+
+                        <td>
+                            <form class="ui form" method="post" th:action="@{/cart}">
+                                <input type="hidden" name="pid" value="0" th:value="${article.id}"/>
+                                <button type="submit" class="btn btn-primary" th:text="#{doc-catalog.addProduct}">add to cart
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <p>All items scanned? Go to the checkout:</p>
+                <div class="col-1 d-flex justify-content-end">
+                    <form sec:authorize="hasAnyRole('DOC')" class="ui form" method="post" th:action="@{/checkout}">
+                        <button type="submit" class="btn btn-primary" onclick="alert('Thank you for shopping!')" th:text="#{cart.buyProducts}">Buy</button>
+                    </form>
+                </div>
+                <!--<a class="btn btn-primary" href="cart.html" th:href="@{/cart}">Head to Cart</a> -->
+            </div>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

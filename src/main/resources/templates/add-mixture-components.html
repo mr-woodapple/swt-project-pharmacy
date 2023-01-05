@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:orm="http://www.w3.org/1999/xhtml"
+      xmlns:form="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout.html}">
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Create a new Mixture in Laboratory</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <form method="post" th:action="@{/addMixtureOrder}" id="mixtureForm">
+                    <div class="form mb-3">
+                        <label for="name" class="form-label">Mixture Name</label>
+                        <input class="form-control " id="name" type="text" name="name" placeholder="Enter mixture name"
+                              value="For dry cough" aria-label=".form-control-lg example" required maxlength="30" minlength="2">
+                        <div class="invalid-feedback">
+                            Invalid Mixture Name!
+                        </div>
+                    </div>
+
+                    <div class="form mb-3">
+                        <label class="form-label">Choose necessary components: </label>
+                        <br>
+                        <div class="form-check form-check-inline" th:each="ingredient:${mixtureIngredients}">
+                            <input type="checkbox" class="btn-check" th:id="${ingredient}"
+                                   name="description" th:value="${ingredient}">
+                            <label class="btn btn-outline-dark" th:text="${ingredient}" th:for="${ingredient}"></label>
+                        </div>
+                    </div>
+                    <!--
+                    <label class="form-label">Choose necessary components: </label>
+                    <div class="container-fluid">
+
+                        <div class="form-check form-check-inline" th:each="ingredient:${mixtureIngredients}">
+                            <input type="checkbox" class="btn-check" th:id="${ingredient}"
+                                   name="description" th:value="${ingredient}">
+                            <label class="btn btn-outline-dark" th:text="${ingredient}" th:for="${ingredient}"></label>
+                        </div>
+                    </div>-->
+
+                    <div class="form mb-3">
+                        <label for="customerName" class="form-label">Customer Name</label>
+                        <input class="form-control" id="customerName" type="text" name="customerName" placeholder="Enter customer name"
+                              value="Martin Saperavi" aria-label=".form-control-lg example" required maxlength="30" minlength="2">
+                        <div class="invalid-feedback">
+                            Customer name is not valid!
+                        </div>
+                    </div>
+                    <div class="form mb-3">
+                        <label for="customerTel" class="form-label">Customer Tel./E-mail</label>
+                        <input class="form-control " id="customerTel" type="text" name="customerTel" placeholder="Enter customer e-mail or telephone"
+                              value="017845362934" aria-label=".form-control-lg example" required minlength="7" maxlength="35">
+                    </div>
+                    <div class="invalid-feedback">
+                        Contact Data is not valid!
+                    </div>
+
+                    <div class="row">
+                        <div class="col d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary" style="margin-top: 50px">Save Mixture</button>
+                        </div>
+                    </div>
+
+                </form>
+
+                <button class="open-button" onclick="openForm()">Add Component</button>
+
+                <div class="form-popup" id="componentForm">
+                    <form method="post" class="form-container" th:action="@{/addComponent}">
+                        <div class="field">
+                            <label for="component" class="form-label">Please enter Component name:</label>
+                            <input class="form-control " id="component" type="text" name="component" value="Component 133"
+                                   aria-label=".form-control-lg example" required maxlength="30" minlength="2">
+                            <div class="invalid-feedback">
+                                Invalid Component Name!
+                            </div>
+                        </div>
+                        <button type="submit" class="btn add">Add</button>
+                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                    </form>
+                </div>
+
+                <script>
+                    function openForm() {
+                        document.getElementById("componentForm").style.display = "block";
+                    }
+
+                    function closeForm() {
+                        document.getElementById("componentForm").style.display = "none";
+                    }
+                </script>
+                <script>
+                    $(document).ready(function(){
+                        $('#mixtureForm').submit(function(){
+                            if ($('input:checkbox').filter(':checked').length < 1){
+                                alert("Please choose at least one Component!");
+                                return false;
+                            }
+                        });
+                    });
+                </script>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>

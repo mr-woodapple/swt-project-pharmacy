@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Order Details</h2>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <a th:href="@{/accounting-overview}" class="btn btn-outline-dark" role="button" href="accounting-overview.html">Go Back</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+
+                <h3>Overview</h3>
+                <br>
+                <table>
+                    <tr>
+                        <td><b>Order-ID:</b>&nbsp</td>
+                        <td th:text="${orderId}">ID</td>
+                    </tr>
+                    <tr>
+                        <td><b>Ordered by:</b>&nbsp</td>
+                        <td th:text="${orderAccount}">Cheffe</td>
+                    </tr>
+                    <tr>
+                        <td><b>Date & Time:</b>&nbsp</td>
+                        <td th:text="${orderDate}">20.06.1999 12:59</td>
+                    </tr>
+                </table>
+
+                <br>
+
+                <table>
+                    <tr>
+                        <td><b>Total Amount:</b>&nbsp</td>
+                        <td th:text="${orderValue}">EUR 25,99</td>
+                    </tr>
+
+                </table>
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>

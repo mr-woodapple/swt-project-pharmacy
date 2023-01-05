@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+
+</head>
+<body>
+<section layout:fragment="content">
+        <div class="col sub-wrapper">
+        <header>
+            <h3 style=" text-align:center; font-size:250%;" th:text="${article.name}"></h3>
+        </header>
+       	<br></br>
+            <div class="ui items">
+                <div class="item">
+                    <div class="image">
+                        <img width="40%" height="40%" th:src="@{/resources/img/generic-drug.jpg}"
+                             src="../static/resources/img/generic-drug.jpg"/>
+                       
+                      <!-- <span th:text="${article.getID()}"></span>
+						<br></br>
+                        <span th:text="${{article.price}}"></span>  -->  
+		
+                        <br></br>
+                        <h1 style=" font-size:150%; "> Leaflet: </h1>
+                        <span th:text="${{article.description}}"></span>
+                        <br></br>
+                        <p th:text="'In Stock: ' + ${quantity}">10</p>
+                        <p th:text="'Pack size: ' + ${article.packSize}">10</p>
+                    </div>
+                </div>
+            </div>
+         </div>
+</section>
+</body>
+</html>

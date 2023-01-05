@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2 th:text="#{accounting.heading}">Welcome to Finances</h2>
+            </div>
+        </div>
+
+        <!-- statistics for finances at the above the invoice list -->
+        <div class="quick-stats">
+            <div class="row">
+                <div class="col quick-stats-detail">
+                    <div class="row">
+                        <div class="col"><h4 th:text="#{accounting.totalBalance}">Total Balance:</h4></div>
+                        <div class="col d-flex justify-content-end">
+                            <h4 th:text="${balance}">4.300 €</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-detail">
+                            <p>
+                                <i class="fas fa-info-circle"></i>
+                                <i th:text="#{accounting.totalBalance.info}">Info text</i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col quick-stats-detail">
+                    <div class="row">
+                        <div class="col"><h4 th:text="#{accounting.totalIncome}">Total Income:</h4></div>
+                        <div class="col d-flex justify-content-end">
+                            <h4 th:text="${totalIncome}">4.300 €</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-detail">
+                            <p>
+                                <i class="fas fa-info-circle"></i>
+                                <i th:text="#{accounting.totalIncome.info}">Info text</i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col quick-stats-detail">
+                    <div class="row">
+                        <div class="col">
+                            <h4 th:text="#{accounting.totalExpenses}">Total Expenses:</h4>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <h4 th:text="${totalExpenses}">4.300 €</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-detail">
+                            <p>
+                                <i class="fas fa-info-circle"></i>
+                                <i th:text="#{accounting.totalExpenses.info}">Info text</i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col quick-stats-detail">
+                    <div class="row">
+                        <div class="col">
+                            <h4 th:text="#{accounting.checkoutSales}">Checkout Sales:</h4>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <h4 th:text="${checkoutIncome}">4.300 €</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-detail">
+                            <p>
+                                <i class="fas fa-info-circle"></i>
+                                <i th:text="#{accounting.checkoutSales.info}">Info text</i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col quick-stats-detail">
+                    <div class="row">
+                        <div class="col">
+                            <h4 th:text="#{accounting.selfCheckoutSales}">Self-Checkout Sales:</h4>
+                        </div>
+                        <div class="col d-flex justify-content-end"><h4 th:text="${selfCheckoutIncome}">4.300 €</h4></div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-detail">
+                            <p>
+                                <i class="fas fa-info-circle"></i>
+                                <i th:text="#{accounting.selfCheckoutSales.info}">Info text</i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col quick-stats-detail">
+                    <div class="row">
+                        <div class="col">
+                            <h4>Doc-Checkout Sales:</h4>
+                        </div>
+                        <div class="col d-flex justify-content-end"><h4 th:text="${docCheckoutIncome}">4.300 €</h4></div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-detail">
+                            <p>
+                                <i class="fas fa-info-circle"></i>
+                                <i>This is your income from the doctors checkout.</i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- maybe add a fancy graph here? -->
+        </div>
+
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h4 th:text="#{accounting.openPositions}">Open Positions</h4>
+                <p>
+                    <i class="fas fa-info-circle"></i>
+                    <i th:text="#{accounting.openPositions.info}">Open position info text</i>
+                </p>
+                <br>
+                <a class="btn btn-primary" href="accounting-open-orders.html" th:href="@{/accounting-open-orders}" role="button" th:text="#{accounting.openPositions.viewMoreButton}">View Open Positions</a>
+            </div>
+        </div>
+
+
+        <!-- list of invoices -->
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h3 th:text="#{accounting.allOrders}">All Orders</h3>
+                <br>
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col">User</th>
+                        <th class="col">Invoice ID</th>
+                        <th class="col">Total Amount</th>
+                        <th class="col d-flex justify-content-end">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody th:remove="all-but-first">
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.userAccount.id}">2021103001_JochenSchweizer</td>
+                        <td th:text="${order.id}">Invoice 1</td>
+                        <td th:text="${order.value}">215,99 EUR</td>
+                        <!-- Old approach with handing over the order.id and getting a new url that way
+                        <td class="d-flex justify-content-end"><a class="btn btn-primary" th:href="@{/order/{id}(id=${order.id})}" role="button">View Details</a></td>
+                        -->
+
+                        <td class="d-flex justify-content-end">
+                            <!-- New approach with handing over the data we already got from the entry -->
+                            <form class="ui form" method="post" th:action="@{/getOrderDetails}">
+                                <input type="hidden" name="identifier" value="0" th:value="${order.id}"/>
+                                <input type="hidden" name="orderDate" value="0" th:value="${#temporals.format(order.date.get(), 'dd.MM.yyyy  HH:mm')}"/>
+                                <input type="hidden" name="orderValue" value="0" th:value="${order.value}"/>
+                                <input type="hidden" name="orderAccount" value="0" th:value="${order.userAccount.id}"/>
+                                <button type="submit" class="btn btn-primary">View Details</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+</section>
+</body>
+</html>

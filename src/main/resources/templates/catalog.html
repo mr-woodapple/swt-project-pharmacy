@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout.html}">
+<head>
+
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col sub-wrapper">
+                <h2>Product Catalog</h2>
+                <br>
+                <a th:href="@{/cart}" class="btn btn-outline-dark" role="button" href="cart.html">Head to Cart</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <form class="form-inline" id="form_search" name="form_search" method="get" th:action="@{/search-checkout}">
+                    <div class="input-group mb-3">
+                        <input class="form-control" placeholder="Search for..." type="text" name="search"/>
+                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+        <div class="ui positive message" th:if="${succes}" th:text="${succes}"></div>
+        <div class="alert alert-danger" role="alert" th:if="${noresult==true}">
+            No matching product found. Please check for spelling mistakes.
+        </div>
+
+        <div class="row">
+            <div class="col sub-wrapper">
+                <table class="table table-striped">
+
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Info</th>
+                        <th class="d-flex justify-content-end">Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody th:remove="all-but-first">
+                    <tr th:each="article : ${catalog}">
+                        <td th:text="${article.name}">Dispersal aspirin 300mg 32 tablets</td>
+                        <!--               <td th:text="${article.quantity}" sec:authorize="hasAnyRole('BOSS','EMPLOYEE')"></td>  #problem for later -->
+                        <!--<td sec:authorize="hasAnyRole('BOSS','EMPLOYEE')">
+                            <input placeholder="Enter a number" required type="number" value="" min="-100" max="100"/>
+                            <button type="button" onclick="updateQuantity()" class="btn btn-primary"><i
+                                    class="bi bi-eye"></i>done
+                            </button>
+                        </td> -->
+                        <td th:text="${article.price}">2,59 €</td>
+                        <td>
+                            <a th:href="@{/article/{id}(id=${article.id})}" class="btn btn-primary" role="button" href="article-details.html" >Details</a>
+                        </td>
+                        <td class="d-flex justify-content-end">
+                            <form method="post" th:action="@{/cart}">
+                                <input type="hidden" name="pid" value="0" th:value="${article.id}"/>
+                                <button type="submit" class="btn btn-primary" th:text="#{catalog.addProduct}">add to cart
+                                </button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

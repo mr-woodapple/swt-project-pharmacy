@@ -1,0 +1,340 @@
+*, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #eaeaea;
+	height: 100%;
+}
+
+.text {
+	color: black;
+}
+
+
+/* general styling */
+hr.divider {
+	color: white;
+	margin:20px 40px 20px 0;
+}
+
+.fa-angle-right {
+	color: darkgrey;
+}
+
+table, .table-striped>tbody>tr:nth-of-type(odd)>* {
+	color: black;
+}
+
+
+/* styling for the general page wrapper */
+.page-wrapper {
+	margin-left: 300px;
+}
+
+
+/* styling for the wrapper around every section */
+.sub-wrapper {
+	padding: 20px;
+	margin: 10px;
+	background-color: #eaeaea;
+	border-radius: 10px;
+}
+
+.sub-wrapper-dogtor {
+	padding: 20px;
+	margin: 10px;
+	background-color: #fff;
+	border-radius: 10px;
+}
+
+/* Login page styling */
+.login-form {
+	margin: 10% 30% 0 30%;
+	padding: 2.5%;
+}
+
+.nav-pills .nav-link {
+	background: #eaeaea;
+}
+.nav-pills .nav-link:first-child {
+	margin-right: 10px;
+}
+
+
+/* Styling for the pinpad (on the login page) */
+.btn-pinpad-frame {
+	margin: 5px;
+}
+.btn-pinpad-frame-primary {
+	margin: 5px;
+}
+.btn-pinpad-frame-primary .btn-pinpad {
+	color: white;
+	background: #0d6efd;
+	border-radius: 10px;
+}
+.btn-pinpad {
+	width: 100%;
+	background: white;
+	border-radius: 10px;
+}
+
+
+/* styling for the sidebar */
+.sidebar-wrapper {
+	z-index: 1000;
+	position: fixed;
+	width: 300px;
+	height: 100%;
+	margin-left: -300px;
+	display: inline-block;
+	overflow: auto;
+	background: #eaeaea;
+}
+
+.sidebar-logo-area {
+	padding: 20px 0 20px 0;
+}
+
+ul.sidebar-nav {
+	list-style: none;
+}
+
+li.sidebar-user {
+	line-height: 50px !important;
+}
+
+.sidebar-nav li {
+	line-height: 40px;
+}
+
+.sidebar-nav .li-heading {
+	margin-top: 20px;
+}
+
+.sidebar-nav li a{
+	color: black;
+	text-decoration: none;
+	padding: 10px;
+}
+
+.sidebar-nav li a:hover {
+	text-decoration: none;
+	border-radius: 5px;
+	color: grey;
+	background-color: rgba(5, 3, 3, 0.1);
+}
+
+.sidebar-nav li a .fas {
+	color: red;
+}
+
+.button-toggle-theme {
+	background: black;
+	color: white;
+}
+
+.button-toggle-theme:hover{
+	background: grey;
+	color: white;
+}
+
+.useracc {
+	background-color: #fff;
+	border-radius: 10px;
+	margin-right: 40px;
+	padding: 20px;
+}
+
+/* styling for the main content */
+.content-wrapper {
+	position: relative;
+	padding: 20px;
+	margin: 20px;
+	border-radius:30px;
+	background: #fff;
+	min-height: 94vh;
+	box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.1);
+}
+
+.container-fluid.content-wrapper{
+	padding: 20px;
+}
+
+/* Quick stats in the finance overview page */
+.quick-stats {
+	margin: 10px 0 10px 0;
+	border-radius: 10px;
+	background-color: #eaeaea;
+	padding: 20px;
+}
+
+.quick-stats-detail {
+	background-color: #fff;
+	border-radius: 10px;
+	padding: 20px;
+	margin: 20px;
+}
+
+.text-detail {
+	padding-top: 10px;
+}
+
+/*table in inventory*/
+.stock{
+	border-collapse: collapse;
+	width: 100%;
+	background: #fffcf7;
+	border: none;
+	color: #666666;
+	padding: 20px;
+	transition-duration: 0.4s;
+	box-shadow: 0 5px 15px #666666;
+	border-radius: 4px;
+}
+
+#inventorySearch{
+	background-position: 10px 12px; /* Position the search icon */
+	background-repeat: no-repeat; /* Do not repeat the icon image */
+	width: 100%; /* Full-width */
+	font-size: 16px; /* Increase font-size */
+	padding: 12px 20px 12px 40px; /* Add some padding */
+	border: 1px solid #ddd; /* Add a grey border */
+	color: #666666;
+	padding: 20px;
+	transition-duration: 0.4s;
+	box-shadow: 0 5px 15px #666666;
+	border-radius: 4px;
+	margin-bottom: 12px; /* Add some space below the input */
+}
+
+/* Cart styling */
+.button-bar-checkout {
+	margin: 20px -5px -5px -5px;
+}
+
+.modal-header {
+	border-bottom: 1px solid #eaeaea;
+}
+.modal-content {
+	padding: 20px;
+}
+.modal-footer {
+	border-top: 1px solid #eaeaea;
+}
+
+
+/* New order form */
+#newOrder{
+
+	border-collapse: collapse;
+	width: 80%;
+	background: #fffcf7;
+	border: none;
+	color: black;
+	padding: 20px;
+	transition-duration: 0.4s;
+	box-shadow: 0 5px 15px #666666;
+	border-radius: 4px;
+}
+.form-control-lg{
+	width: 70%;
+}
+
+
+/* Register new Employee form */
+.register-form {
+	border-radius: 20px;
+	padding: 40px;
+	margin-top: 20px;
+}
+#form1{
+	margin-left: 30px;
+	width: 85%;
+}
+
+.btn-outline-secondary:hover {
+	color: #fff;
+	background-color: #ff0606;
+	border-color: #6c757d;
+}
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+	background-color: #555;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	opacity: 0.8;
+	position: fixed;
+	bottom: 23px;
+	right: 28px;
+	width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+	display: none;
+	position: fixed;
+	bottom: 0;
+	right: 15px;
+	border: 3px solid #f1f1f1;
+	z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+	max-width: 300px;
+	padding: 10px;
+	background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+	width: 100%;
+	padding: 15px;
+	margin: 5px 0 22px 0;
+	border: none;
+	background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+	background-color: #ddd;
+	outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+	background-color: #0b5ed7;
+	border-color: #0a58ca;
+	color: white;
+	padding: 16px 20px;
+	cursor: pointer;
+	width: 100%;
+	margin-bottom:10px;
+	opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+	background-color: #5c636a;
+	border-color: #565e64;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+	opacity: 1;
+}
+
+/* Style the cards in employee overview */
+.card {
+	background-color: #fff;
+	margin-bottom: 20px;
+	border: none;
+	border: none;
+}
+
